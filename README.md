@@ -52,3 +52,50 @@ CREATE TABLE `reservasi` (
 ```
 
 ## 2. Melakukan aksi terhadap database
+### 1. Laporan Semua Kamar dan Statusnya
+```
+SELECT id_kamar, nomor_kamar, tipe_kamar, harga_per_malam, status
+FROM kamar
+ORDER BY nomor_kamar;
+```
+![task 1](https://github.com/user-attachments/assets/f87a3356-5163-42dc-acfc-2ac5d9d3e10f)
+
+### 2. Laporan Reservasi yang Sedang Berlangsung
+```
+SELECT r.id_reservasi, p.nama AS nama_pelanggan, k.nomor_kamar, r.tanggal_checkin,
+r.tanggal_checkout, r.total_harga, r.status_reservasi
+FROM reservasi r
+JOIN pelanggan p ON r.id_pelanggan = p.id_pelanggan
+JOIN kamar k ON r.id_kamar = k.id_kamar
+WHERE r.status_reservasi = 'dipesan' AND CURDATE() BETWEEN r.tanggal_checkin AND
+r.tanggal_checkout;
+```
+![task 2](https://github.com/user-attachments/assets/5f61bf39-cfb6-4d13-922c-dd069a6642b2)
+
+### 3. Laporan Riwayat Pembayaran Pelanggan
+```
+SELECT p.id_pembayaran, p.id_reservasi, pel.nama AS nama_pelanggan,
+p.tanggal_pembayaran, p.jumlah, p.metode_pembayaran, p.status_pembayaran
+FROM pembayaran p
+JOIN reservasi r ON p.id_reservasi = r.id_reservasi
+JOIN pelanggan pel ON r.id_pelanggan = pel.id_pelanggan
+ORDER BY p.tanggal_pembayaran DESC;
+```
+![task 3](https://github.com/user-attachments/assets/00905c54-f90c-4720-acca-ce47f1159882)
+
+### 4. Laporan Pendapatan dari Reservasi
+```
+SELECT SUM(p.jumlah) AS total_pendapatan
+FROM pembayaran p
+WHERE p.status_pembayaran = 'selesai';
+```
+![task4](https://github.com/user-attachments/assets/60727132-273f-472e-a0ae-918a01c8870e)
+
+### 5.Laporan Ketersediaan Kamar Berdasarkan Tipe
+```
+SELECT tipe_kamar, COUNT(*) AS jumlah_kamar_tersedia
+FROM kamar
+WHERE status = 'tersedia'
+GROUP BY tipe_kamar;
+```
+![task5](https://github.com/user-attachments/assets/4b5c4f1c-900a-4955-854f-8c57ef753712)
