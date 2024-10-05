@@ -3,7 +3,7 @@
 
 |Nama | NIM | Kelas |
 |-|-|-|
-|Dimas Firmansyah | 312210267 | TI 22A2 |
+|Dimas Firmansyah | 312210267 | TI 22 A2 |
 
 # Membuat databse management_hotel dan melakukan aksi
 ## 1. Membuat database
